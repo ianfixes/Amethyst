@@ -12,6 +12,14 @@ import Silica
 
 extension SIWindow {
     static func topWindowForScreenAtPoint(_ point: CGPoint, withWindows windows: [SIWindow]) -> SIWindow? {
+        return relativeWindowForScreenAtPoint(point, withRelation: .optionOnScreenAboveWindow, withWindows: windows)
+    }
+
+    static func secondWindowForScreenAtPoint(_ point: CGPoint, withWindows windows: [SIWindow]) -> SIWindow? {
+        return relativeWindowForScreenAtPoint(point, withRelation: .optionOnScreenBelowWindow, withWindows: windows)
+    }
+
+    static func relativeWindowForScreenAtPoint(_ point: CGPoint, withRelation relation: CGWindowListOption, withWindows windows: [SIWindow]) -> SIWindow? {
         guard let windowDescriptions = windowDescriptions(.optionOnScreenOnly, windowID: CGWindowID(0)), windowDescriptions.count > 0 else {
             return nil
         }
@@ -46,7 +54,7 @@ extension SIWindow {
                 continue
             }
 
-            guard let windowsAboveWindow = SIWindow.windowDescriptions(.optionOnScreenAboveWindow, windowID: windowID.uint32Value) else {
+            guard let windowsAboveWindow = SIWindow.windowDescriptions(relation, windowID: windowID.uint32Value) else {
                 continue
             }
 

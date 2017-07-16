@@ -22,6 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     fileprivate var windowManager: WindowManager?
     private var hotKeyManager: HotKeyManager?
+    private var geometryObeysMouseManager: GeometryObeysMouseManager?
 
     fileprivate var statusItem: NSStatusItem?
     @IBOutlet var statusItemMenu: NSMenu?
@@ -75,8 +76,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         windowManager = WindowManager(userConfiguration: UserConfiguration.shared)
         hotKeyManager = HotKeyManager(userConfiguration: UserConfiguration.shared)
+        geometryObeysMouseManager = GeometryObeysMouseManager(userConfiguration: UserConfiguration.shared)
 
         hotKeyManager?.setUpWithWindowManager(windowManager!, configuration: UserConfiguration.shared)
+        geometryObeysMouseManager?.setUpWithWindowManager(windowManager!, configuration: UserConfiguration.shared)
     }
 
     override func awakeFromNib() {
